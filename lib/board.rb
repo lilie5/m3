@@ -18,9 +18,11 @@ class Board
   end
 
   def getSide(player)
+    @sides.find { |side| side.getPlayer == player }
   end
 
   def getOpponentSide(player)
+    @sides.find { |side| side.getPlayer != player }
   end
 
   def getPit(row, column)
@@ -28,5 +30,14 @@ class Board
   end
 
   def getOpposingPits(pit)
+
+    # From spec: "Returns the opponent’s two pits in the `pit's` column, inner pit first."
+    column = pit.getColumn
+    
+    if pit.getRow <= 1
+      return [getPit(2, column), getPit(3, column)]
+    else
+      return [getPit(1, column), getPit(0, column)]
+    end
   end
 end
