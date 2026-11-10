@@ -1,7 +1,7 @@
 require_relative "node"
 
-# Owner: Braedan Chappel (Bchappel), issue #5.
 class DoublyLinkedList
+
   def initialize(pits)
     @head = nil
     @length = 0
@@ -9,7 +9,9 @@ class DoublyLinkedList
   end
 
   def append(pit)
+
     node = Node.new(pit)
+
     if @head.nil?
       node.setNext(node)
       node.setPrev(node)
@@ -21,16 +23,21 @@ class DoublyLinkedList
       node.setNext(@head)
       @head.setPrev(node)
     end
+
     @length += 1
+
   end
 
   def find(pit)
+
     node = @head
+
     @length.times do
       return node if node.getPit.equal?(pit)
 
       node = node.getNext
     end
+
     nil
   end
 end

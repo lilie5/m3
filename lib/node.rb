@@ -1,7 +1,7 @@
 require_relative "pit"
 
-# Owner: Braedan Chappel (Bchappel), issue #6.
 class Node
+  
   def initialize(pit)
     @pit = pit
     @next = nil

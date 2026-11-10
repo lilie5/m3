@@ -1,5 +1,5 @@
-# Owner: Braedan Chappel (Bchappel), issue #10.
 class Capture
+
   def initialize(board, player, landingPit)
     @board = board
     @landingPit = landingPit

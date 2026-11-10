@@ -1,7 +1,7 @@
 require "set"
 
-# Owner: Braedan Chappel (Bchappel), issue #11.
 class Turn
+  
   TIME_LIMIT = 180
 
   def initialize(player)
