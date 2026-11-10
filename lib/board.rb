@@ -7,6 +7,14 @@ class Board
   SIDE_ROWS = 2
 
   def initialize(first, second)
+      @pits = []
+      @sides = []
+
+      (0...ROWS).each do |row|
+        (0...COLUMNS).each do |column|
+          @pits << Pit.new(row, column)
+        end
+      end
   end
 
   def getSide(player)
