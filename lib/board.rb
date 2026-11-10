@@ -24,6 +24,7 @@ class Board
   end
 
   def getPit(row, column)
+    @pits.find { |pit| pit.getRow == row && pit.getColumn == column }
   end
 
   def getOpposingPits(pit)
