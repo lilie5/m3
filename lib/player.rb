@@ -1,3 +1,4 @@
+# Owner: Braedan Chappel (Bchappel), issue #1.
 class Player
   def initialize(id, name)
     @id = id
