@@ -33,7 +33,7 @@ class OmwesoGameEngine
   end
 
   def getSetupPlayer
-    return unless @state != :SETUP
+    return unless @state == :SETUP #fix, was returning nil
     @setupPlayer
   end
 
