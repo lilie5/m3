@@ -189,7 +189,7 @@ class ConsoleView
     while game.getState == :SETUP
       player = game.getSetupPlayer
       side = game.getBoard.getSide(player)
-      rows = [side.getInnerRow, side.getOuterRow].sort
+      rows = [side.getInnerRow, side.getOuterRow]
       shownRows = rows.map { |row| row + 1 }
 
       askCount = lambda do |row, column|
