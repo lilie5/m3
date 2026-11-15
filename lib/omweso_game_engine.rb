@@ -5,7 +5,7 @@ require_relative "forward_sow"
 require_relative "reverse_sow"
 
 class OmwesoGameEngine
-  SEEDS_PER_PLAYER = 32
+  SEEDS_PER_PLAYER = 32 #constant, initial total seeds per player
 
   def initialize(name1, name2)
     @players = [Player.new(1,name1), Player.new(2, name2)] 
@@ -19,6 +19,7 @@ class OmwesoGameEngine
     @reversePit = nil
   end
 
+  #Getter/Acessor methods
   def getBoard
     @board
   end
@@ -70,9 +71,48 @@ class OmwesoGameEngine
   end
 
   def finishSetup
+    raise ArgumentError, "SEEDS_LEFT" if @seedsLeft > 0 #seeds still need to be placed
+
+    if @setupPlayer == @players[0] #P1 has set up, moving to P2
+      @setupPlayer = @players[1]
+      @seedsLeft = SEEDS_PER_PLAYER #reset seed count for P2
+    else
+      @setupPlayer = nil #P2 has set up
+      @turn = Turn.new(@players.sample) #random player selected for Turn
+      @state = :IN_PROGRESS #game state set
+    end
   end
 
   def takeTurn(row, column, reverse)
+    player = @turn.getPlayer
+    opponent = @players.find { |p| p != player }
+    startingPit = ownPit(player, row, column)
+    raise ArgumentError, "NOT_OWN_PIT" if startingPit.nil?
+    if @reversePit && startingPit != @reversePit #if reversepit
+      raise ArgumentError, "NOT_THE_PAUSED_PIT"
+    end
+
+    # step 2, 
+    side = @board.getSide(player)
+    sow = reverse ? ReverseSow.new(@turn, @board, side) : ForwardSow.new(@turn, @board, side)
+    
+    # step 3
+    reversePit = sow.sow(startingPit)
+    @reversePit = reversePit
+    return if reversePit #turn paused, View calls takeTurn again with that pit.
+
+    #step 4 - game end check
+    if @turn.isTimedOut #has time ran out?
+      endGame(opponent, :TIME) 
+    elsif !side.hasLegalMove #can the current player play any move?
+      endGame(opponent, :IMMOBILIZATION) #oppnenet wins
+    elsif !@board.getSide(opponent).hasLegalMove #can the oppnonent move?
+      endGame(player, :IMMOBILIZATION) #curr player wins
+    elsif @turn.capturedBothEnds #turn captured both end columns, game end
+      endGame(player, :EMITWE_EBIRI)
+    else
+      @turn = Turn.new(opponent)
+    end
   end
 
   private
@@ -84,5 +124,8 @@ class OmwesoGameEngine
   end
 
   def endGame(player, reason)
+    @state = :WON
+    @winner = player
+    @victoryType = reason
   end
 end
