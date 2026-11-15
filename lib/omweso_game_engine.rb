@@ -46,12 +46,12 @@ class OmwesoGameEngine
   end
 
   def getWinner
-    return unless @state != :WON
+    return unless @state == :WON
     @winner
   end
 
   def getVictoryType
-    return unless @state != :WON
+    return unless @state == :WON
     @victoryType
   end
 
