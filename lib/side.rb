@@ -57,7 +57,7 @@ class Side
   def isReversePit(pit)
     # From spec: "Returns true if this side owns pit and pit is in the
     # player’s two leftmost columns as seen from their seat."
-    left_columns = @player.getId == 1 ? [6, 7] : [0, 1]
+    left_columns = @player.getId == 1 ? [0, 1] : [6, 7]
     owns(pit) && left_columns.include?(pit.getColumn)
   end
 
