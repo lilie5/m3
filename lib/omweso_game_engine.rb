@@ -93,7 +93,7 @@ class OmwesoGameEngine
       raise ArgumentError, "NOT_THE_PAUSED_PIT"
     end
 
-    # step 2
+    # step 2: sowing
     side = @board.getSide(player)
     sow = reverse ? ReverseSow.new(@turn, @board, side) : ForwardSow.new(@turn, @board, side)
     
@@ -112,7 +112,7 @@ class OmwesoGameEngine
     elsif @turn.capturedBothEnds #turn captured both end columns, game end
       endGame(player, :EMITWE_EBIRI)
     else
-      @turn = Turn.new(opponent)
+      @turn = Turn.new(opponent) # none of the above, switch turns
     end
   end
 
