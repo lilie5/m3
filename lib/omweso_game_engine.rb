@@ -84,15 +84,16 @@ class OmwesoGameEngine
   end
 
   def takeTurn(row, column, reverse)
+
+    #step 1
     player = @turn.getPlayer
-    opponent = @players.find { |p| p != player }
+    opponent = @players.find { |otherPlayer| otherPlayer != player } #finds who is not taking the turn
     startingPit = ownPit(player, row, column)
-    raise ArgumentError, "NOT_OWN_PIT" if startingPit.nil?
     if @reversePit && startingPit != @reversePit #if reversepit
       raise ArgumentError, "NOT_THE_PAUSED_PIT"
     end
 
-    # step 2, 
+    # step 2
     side = @board.getSide(player)
     sow = reverse ? ReverseSow.new(@turn, @board, side) : ForwardSow.new(@turn, @board, side)
     
