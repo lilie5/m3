@@ -10,11 +10,16 @@ class Board
       @pits = []
       @sides = []
 
+      # pit init
       (0...ROWS).each do |row|
         (0...COLUMNS).each do |column|
           @pits << Pit.new(row, column)
         end
       end
+
+      #fix, missing sides init
+      @sides << Side.new(self, first) #sides now
+      @sides << Side.new(self, second)
   end
 
   def getSide(player)

@@ -26,8 +26,10 @@ class Pit
     @seeds += 1
   end
 
-  def removeAllSeeds
+  def removeAllSeeds #fix, now returns # of seeds removed
+    removed = @seeds
     @seeds = 0
+    removed
   end
 
   def isEmpty?

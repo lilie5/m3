@@ -33,7 +33,7 @@ class OmwesoGameEngine
   end
 
   def getSetupPlayer
-    return unless @state != :SETUP
+    return unless @state == :SETUP #fix, was returning nil
     @setupPlayer
   end
 
@@ -46,12 +46,12 @@ class OmwesoGameEngine
   end
 
   def getWinner
-    return unless @state != :WON
+    return unless @state == :WON
     @winner
   end
 
   def getVictoryType
-    return unless @state != :WON
+    return unless @state == :WON
     @victoryType
   end
 
@@ -121,7 +121,10 @@ class OmwesoGameEngine
   def ownPit(player, row, column)
     side = @board.getSide(player)
     pit = @board.getPit(row, column)
-    side.owns(pit) ? pit : nil
+
+    # Added NOT_YOUR_PIT exception here, not defined in spec, defined by Lucas in console_view.rb.
+    raise ArgumentError, "NOT_YOUR_PIT" unless side.owns(pit) 
+    pit
   end
 
   def endGame(player, reason)
